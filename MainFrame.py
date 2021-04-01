@@ -59,13 +59,13 @@ class MainFrame():
         scrolledwindow.add(myTree)
         hpaned.pack1(scrolledwindow, True, True)
         label = gtk.Label(i)
-
-        hpaned.pack2(self.__action_buttons(), False, False)
+        buttons = self.__action_buttons(listStore, myTree)
+        hpaned.pack2(buttons, False, False)
 
 
         return hpaned
 
-    def __action_buttons(self):
+    def __action_buttons(self, listStore, myTree):
         def btn_add_clicked(button):
             Add()
         def btn_edit_clicked(button):
