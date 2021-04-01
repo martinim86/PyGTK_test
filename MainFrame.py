@@ -3,28 +3,31 @@
 # Settings widget that displays common settings.
 # Displayed inside a tab in MapTools.
 
-import gtk
-import bd
 from redact.Add import *
 from redact.Edit import *
 
 class MainFrame():
+    model = ""
+    treeiter = ""
+
     def liststore_tz(self, listStore):
         for i in bd.get_tyaz_from_db():
-            listStore.append([i[0], i[1]])
+            listStore.append([i[0], i[1], i[2]])
         return listStore
 
 
+
     def show(self, i):
-        listStore = gtk.ListStore(str, str)
+        listStore = gtk.ListStore(str, str, str)
 
         myTree = gtk.TreeView(self.liststore_tz(listStore))
-        strCols = ['Description', 'Latitude']
+        strCols = ['Index','login', 'pass']
         treeselection = myTree.get_selection()
         def on_tree_selection_changed(selection):
             model, treeiter = treeselection.get_selected()
-            if treeiter != None:
-                print "You selected", model[treeiter][1]
+            self.model = model
+            self.treeiter = treeiter
+
         treeselection.connect("changed", on_tree_selection_changed)
         (model, iter) = treeselection.get_selected()
 
@@ -66,7 +69,10 @@ class MainFrame():
         def btn_add_clicked(button):
             Add()
         def btn_edit_clicked(button):
-            Edit()
+            Edit(self.model, self.treeiter)
+
+        def btn_delete_clicked(button):
+            print "hi"
         bbox = gtk.HButtonBox()
         bbox.set_layout(gtk.BUTTONBOX_END)
         bbox.set_border_width(10)
@@ -82,7 +88,7 @@ class MainFrame():
 
 
         button = gtk.Button(stock=gtk.STOCK_DELETE)
-        button.connect('clicked', btn_add_clicked)
+        button.connect('clicked', btn_delete_clicked, listStore, myTree )
         bbox.add(button)
 
         return bbox

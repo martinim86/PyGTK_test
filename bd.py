@@ -7,7 +7,8 @@ import sqlite3
 
 conn = sqlite3.connect("mydb.db")
 cursor = conn.cursor()
-# cursor.execute("""CREATE TABLE user(login text, pass text)""")
+# cursor.execute("""CREATE TABLE user1(a INTEGER PRIMARY KEY NOT NULL, login text, pass text)""")
+# conn.commit()
 # cursor.execute("""INSERT INTO user
 #                   VALUES ('admin','admin')"""
 #                )
@@ -19,19 +20,26 @@ cursor = conn.cursor()
 # conn.commit()
 
 def login_bd():
-    sql = "SELECT login,pass FROM user"
+    sql = "SELECT login,pass FROM user1"
     return cursor.execute(sql)
 def get_tyaz_from_db():
-    sql = "SELECT login,pass FROM user"
+    sql = "SELECT a, login, pass FROM user1"
     return cursor.execute(sql)
 
 def add(entry, password):
 
-    sql = """INSERT INTO user
+    sql = """INSERT INTO user1
                               (login, pass)
                               VALUES
                               (?, ?);"""
     data_tuple = (entry, password)
+    cursor.execute(sql, data_tuple)
+    conn.commit()
+
+def edit(id, entry, password):
+
+    sql = """Update user1 set  login = ?, pass = ? where a = ?"""
+    data_tuple = (entry,password, id)
     cursor.execute(sql, data_tuple)
     conn.commit()
 

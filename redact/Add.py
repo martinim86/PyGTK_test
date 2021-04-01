@@ -10,13 +10,15 @@ import pygtk
 import bd
 import gtk
 pygtk.require('2.0')
-
+# from ..MainFrame import *
 
 
 
 class Add:
     def login(self, num):
-        bd.add(self.entry.get_text(),self.password.get_text() )
+        bd.add(self.entry.get_text(),self.password.get_text())
+
+
 
 
         # print
@@ -29,15 +31,18 @@ class Add:
         password.set_visibility(checkbutton.get_active())
 
     def __init__(self):
+        def __delete():
+            window.settingsw = None
         # Создаём новое окно
         window = gtk.Window(gtk.WINDOW_TOPLEVEL)
         window.set_size_request(600, 600)
         window.set_title("Добавление записи")
-        window.connect("delete_event", lambda w, e: gtk.main_quit())
-
+        # window.connect("delete_event", lambda w, e: gtk.main_quit())
+        window.set_destroy_with_parent(True)
         vbox = gtk.VBox(False, 0)
         window.add(vbox)
         vbox.show()
+
 
 
         label = gtk.Label()
