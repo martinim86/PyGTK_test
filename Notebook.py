@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+## @package gmapcatcher.widgets.widMySettings
+# Settings widget that displays common settings.
+# Displayed inside a tab in MapTools.
+
 import pygtk
 pygtk.require('2.0')
 import gtk
@@ -17,7 +22,7 @@ class BasicTreeViewExample:
 
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
 
-        self.window.set_title("TreeView")
+        self.window.set_title("База дежурного ЦКМО")
 
         self.window.set_size_request(600, 600)
 

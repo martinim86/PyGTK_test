@@ -66,20 +66,40 @@ class MainFrame():
         return hpaned
 
     def __action_buttons(self, listStore, myTree):
-        def btn_add_clicked(button):
-            Add()
+        def btn_add_clicked(button, listStore, myTree):
+            self.settingsw = Add(self, listStore, myTree)
+            # treeSelection = myTree.get_selection()
+            # model, iter = treeSelection.get_selected()
+            # listStore.clear()
+            # myTree.set_model(self.liststore_tz(listStore))
+            # listStore.set_sort_column_id(0, gtk.SORT_ASCENDING)
+            # myTree.grab_focus()
+
         def btn_edit_clicked(button):
             Edit(self.model, self.treeiter)
 
-        def btn_delete_clicked(button):
-            print "hi"
+        def btn_delete_clicked(button, listStore, myTree):
+            treeSelection = myTree.get_selection()
+            model, iter = treeSelection.get_selected()
+            bd.delete(model[iter][0])
+            refresh(listStore, myTree)
+
+
+        def refresh(listStore, myTree):
+            listStore.clear()
+            myTree.set_model(self.liststore_tz(listStore))
+            listStore.set_sort_column_id(0, gtk.SORT_ASCENDING)
+            myTree.grab_focus()
+
+
+
         bbox = gtk.HButtonBox()
         bbox.set_layout(gtk.BUTTONBOX_END)
         bbox.set_border_width(10)
         bbox.set_spacing(60)
 
         button = gtk.Button(stock=gtk.STOCK_ADD)
-        button.connect('clicked', btn_add_clicked)
+        button.connect('clicked', btn_add_clicked, listStore, myTree)
         bbox.add(button)
 
         button = gtk.Button(stock=gtk.STOCK_EDIT)
@@ -92,6 +112,10 @@ class MainFrame():
         bbox.add(button)
 
         return bbox
+    def change_selection(self, myTree, intPath):
+        if intPath >= 0:
+            myTree.set_cursor(intPath)
+            myTree.grab_focus()
 
 
 

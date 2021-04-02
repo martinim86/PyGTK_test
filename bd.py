@@ -42,4 +42,10 @@ def edit(id, entry, password):
     data_tuple = (entry,password, id)
     cursor.execute(sql, data_tuple)
     conn.commit()
+def delete(id):
+    print id
+    sql = """DELETE from user1 where a = ?"""
+    data_tuple = (id)
+    cursor.execute(sql, data_tuple)
+    conn.commit()
 

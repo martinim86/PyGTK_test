@@ -5,12 +5,11 @@ import gobject
 import re
 import sys
 import time
-from Notebook import BasicTreeViewExample
+import MainFrame
 import pygtk
 import bd
 import gtk
 pygtk.require('2.0')
-# from ..MainFrame import *
 
 
 
@@ -29,15 +28,17 @@ class Add:
 
     def password_toggle_visibility(self, checkbutton, password):
         password.set_visibility(checkbutton.get_active())
+    # def test(self):
+    #     MainFrame()
 
-    def __init__(self):
+    def __init__(self, Mapsobj, listStore, myTree):
         def __delete():
             window.settingsw = None
         # Создаём новое окно
         window = gtk.Window(gtk.WINDOW_TOPLEVEL)
         window.set_size_request(600, 600)
         window.set_title("Добавление записи")
-        # window.connect("delete_event", lambda w, e: gtk.main_quit())
+        # window.connect("delete_event", lambda w, e: Mapsobj.refresh(listStore, myTree))
         window.set_destroy_with_parent(True)
         vbox = gtk.VBox(False, 0)
         window.add(vbox)
@@ -80,6 +81,7 @@ class Add:
         button.grab_default()
         button.show()
         window.show()
+
 
 
 
