@@ -14,10 +14,6 @@ pygtk.require('2.0')
 
 
 class Add:
-    def login(self, num):
-        bd.add(self.entry.get_text(),self.password.get_text())
-
-
 
 
         # print
@@ -38,7 +34,7 @@ class Add:
         window = gtk.Window(gtk.WINDOW_TOPLEVEL)
         window.set_size_request(600, 600)
         window.set_title("Добавление записи")
-        # window.connect("delete_event", lambda w, e: Mapsobj.refresh(listStore, myTree))
+        window.connect("delete_event", lambda w, e: Mapsobj.refresh(listStore, myTree))
         window.set_destroy_with_parent(True)
         vbox = gtk.VBox(False, 0)
         window.add(vbox)
@@ -71,7 +67,7 @@ class Add:
 
         button_login = gtk.Button("Сохранить")
         vbox.pack_start(button_login, True, True, 0)
-        button_login.connect("clicked", self.login)
+        button_login.connect("clicked",self.key_press_event, window, Mapsobj, listStore, myTree)
         button_login.show()
 
         button = gtk.Button(stock=gtk.STOCK_CLOSE)
@@ -82,7 +78,10 @@ class Add:
         button.show()
         window.show()
 
-
+    def key_press_event(self,  event, window, Mapsobj, listStore, myTree):
+        bd.add(self.entry.get_text(), self.password.get_text())
+        window.destroy()
+        Mapsobj.refresh(listStore, myTree)
 
 
 

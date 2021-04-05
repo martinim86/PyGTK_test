@@ -5,7 +5,7 @@ import gobject
 import re
 import sys
 import time
-from Notebook import BasicTreeViewExample
+import Notebook
 import pygtk
 import bd
 import gtk
@@ -15,12 +15,13 @@ pygtk.require('2.0')
 
 
 class EntryExample:
-    def login(self, num):
+    def login(self, num, window):
 
         for i in bd.login_bd():
             if self.entry.get_text() == i[0] and self.password.get_text() == i[1] :
-                BasicTreeViewExample()
-                print self.entry.get_text()
+                Notebook.BasicTreeViewExample()
+                window.destroy()
+
 
 
         # print
@@ -75,7 +76,7 @@ class EntryExample:
 
         button_login = gtk.Button("Войти")
         vbox.pack_start(button_login, True, True, 0)
-        button_login.connect("clicked", self.login)
+        button_login.connect("clicked", self.login, window)
         button_login.show()
 
         button = gtk.Button(stock=gtk.STOCK_CLOSE)

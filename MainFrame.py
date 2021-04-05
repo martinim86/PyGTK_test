@@ -18,7 +18,7 @@ class MainFrame():
 
 
     def show(self, i):
-        listStore = gtk.ListStore(str, str, str)
+        listStore = gtk.ListStore(int, str, str)
 
         myTree = gtk.TreeView(self.liststore_tz(listStore))
         strCols = ['Index','login', 'pass']
@@ -65,6 +65,12 @@ class MainFrame():
 
         return hpaned
 
+    def refresh(self, listStore, myTree):
+        listStore.clear()
+        myTree.set_model(self.liststore_tz(listStore))
+        listStore.set_sort_column_id(0, gtk.SORT_ASCENDING)
+        myTree.grab_focus()
+
     def __action_buttons(self, listStore, myTree):
         def btn_add_clicked(button, listStore, myTree):
             self.settingsw = Add(self, listStore, myTree)
@@ -75,21 +81,17 @@ class MainFrame():
             # listStore.set_sort_column_id(0, gtk.SORT_ASCENDING)
             # myTree.grab_focus()
 
-        def btn_edit_clicked(button):
-            Edit(self.model, self.treeiter)
+        def btn_edit_clicked(button, listStore, myTree):
+            Edit(self.model, self.treeiter, self, listStore, myTree)
 
         def btn_delete_clicked(button, listStore, myTree):
             treeSelection = myTree.get_selection()
             model, iter = treeSelection.get_selected()
             bd.delete(model[iter][0])
-            refresh(listStore, myTree)
+            self.refresh(listStore, myTree)
 
 
-        def refresh(listStore, myTree):
-            listStore.clear()
-            myTree.set_model(self.liststore_tz(listStore))
-            listStore.set_sort_column_id(0, gtk.SORT_ASCENDING)
-            myTree.grab_focus()
+
 
 
 
@@ -103,7 +105,7 @@ class MainFrame():
         bbox.add(button)
 
         button = gtk.Button(stock=gtk.STOCK_EDIT)
-        button.connect('clicked', btn_edit_clicked)
+        button.connect('clicked', btn_edit_clicked, listStore, myTree)
         bbox.add(button)
 
 

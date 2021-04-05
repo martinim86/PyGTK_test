@@ -5,7 +5,6 @@ import gobject
 import re
 import sys
 import time
-from Notebook import BasicTreeViewExample
 import pygtk
 import bd
 import gtk
@@ -15,8 +14,10 @@ pygtk.require('2.0')
 
 
 class Edit:
-    def login(self, num, model, treeiter):
+    def key_press_event(self, num, model, treeiter, Mapsobj, listStore, myTree, window):
         bd.edit(model[treeiter][0], self.entry.get_text(),self.password.get_text() )
+        window.destroy()
+        Mapsobj.refresh(listStore, myTree)
 
 
 
@@ -29,12 +30,12 @@ class Edit:
     def password_toggle_visibility(self, checkbutton, password):
         password.set_visibility(checkbutton.get_active())
 
-    def __init__(self, model, treeiter):
+    def __init__(self, model, treeiter, Mapsobj, listStore, myTree):
         # Создаём новое окно
         window = gtk.Window(gtk.WINDOW_TOPLEVEL)
         window.set_size_request(600, 600)
         window.set_title("Добавление записи")
-        # window.connect("delete_event", lambda w, e: gtk.main_quit())
+        window.connect("delete_event", lambda w, e: Mapsobj.refresh(listStore, myTree))
 
         vbox = gtk.VBox(False, 0)
         window.add(vbox)
@@ -69,7 +70,7 @@ class Edit:
 
         button_save = gtk.Button("Сохранить изменения")
         vbox.pack_start(button_save, True, True, 0)
-        button_save.connect("clicked", self.login, model, treeiter)
+        button_save.connect("clicked", self.key_press_event, model, treeiter, Mapsobj, listStore, myTree, window)
         button_save.show()
 
         button = gtk.Button(stock=gtk.STOCK_CLOSE)
