@@ -10,7 +10,7 @@ import bd
 from constants import *
 from widg.calendar import CalendarExample
 
-class Add_paned():
+class Edit_paned():
     okrug = ""
     def enter_callback(self):
         print "hlk"
@@ -18,26 +18,32 @@ class Add_paned():
         calendar = CalendarExample(self, date)
 
 
-    def _okrug(self):
-        hbox = gtk.HBox(False, 10)
-        self.okrug = gtk.combo_box_entry_new_text()
-        for strType in OKRUG:
-            self.okrug.append_text(strType)
-        hbox.pack_start(self.okrug)
-        return myFrame(" Округ ", hbox)
+
 
     def show(self, window, Mapsobj, listStore, myTree):
+        treeselection = myTree.get_selection()
+        (model, iter) = treeselection.get_selected()
 
+        def _okrug():
+            hbox = gtk.HBox(False, 10)
+            self.okrug = gtk.combo_box_entry_new_text()
+            for strType in OKRUG:
+                self.okrug.append_text(strType)
+            self.okrug.set_active(OKRUG.index(model[iter][1]))
+            hbox.pack_start(self.okrug)
+            return myFrame(" Округ ", hbox)
         def _familia():
             hbox = gtk.HBox(False, 10)
             self.entry_familia = gtk.Entry()
             self.entry_familia.set_max_length(50)
+            self.entry_familia.set_text(model[iter][2])
             hbox.pack_start(self.entry_familia, True)
             return myFrame(" Фамилия ", hbox)
         def _imya():
             hbox = gtk.HBox(False, 10)
             self.entry_imya = gtk.Entry()
             self.entry_imya.set_max_length(50)
+            self.entry_imya.set_text(model[iter][3])
             hbox.pack_start(self.entry_imya, True)
             return myFrame(" Имя ", hbox)
 
@@ -45,6 +51,7 @@ class Add_paned():
             hbox = gtk.HBox(False, 10)
             self.entry_othcestvo = gtk.Entry()
             self.entry_othcestvo.set_max_length(50)
+            self.entry_othcestvo.set_text(model[iter][4])
             hbox.pack_start(self.entry_othcestvo, True)
             return myFrame(" Отчетство ", hbox)
         def _zvanie():
@@ -55,6 +62,7 @@ class Add_paned():
             self.zvanie = gtk.combo_box_entry_new_text()
             for strType in ZVANIE:
                 self.zvanie.append_text(strType)
+            self.zvanie.set_active(ZVANIE.index(model[iter][5]))
             hbox.pack_start(self.zvanie)
             return myFrame(" Звание ", hbox)
 
@@ -65,7 +73,7 @@ class Add_paned():
             self.entry_dateofbirth.set_max_length(50)
             button = gtk.Button("...")
             button.connect('clicked', self.calendar, self.entry_dateofbirth)
-
+            self.entry_dateofbirth.set_text(model[iter][6])
             hbox.pack_start(self.entry_dateofbirth, True)
             hbox.pack_start(button, False)
             return myFrame(" Дата рождения ", hbox)
@@ -75,7 +83,7 @@ class Add_paned():
             self.entry_dateofdeath.set_max_length(50)
             button = gtk.Button("...")
             button.connect('clicked', self.calendar, self.entry_dateofdeath)
-
+            self.entry_dateofdeath.set_text(model[iter][7])
             hbox.pack_start(self.entry_dateofdeath, True)
             hbox.pack_start(button, False)
             return myFrame(" Дата смерти ", hbox)
@@ -83,18 +91,21 @@ class Add_paned():
             hbox = gtk.HBox(False, 5)
             self.entry_vchast = gtk.Entry()
             self.entry_vchast.set_max_length(50)
+            self.entry_vchast.set_text(model[iter][8])
             hbox.pack_start(self.entry_vchast, True)
             return myFrame(" Военная часть ", hbox)
         def _disl():
             hbox = gtk.HBox(False, 5)
             self.entry_disl = gtk.Entry()
             self.entry_disl.set_max_length(50)
+            self.entry_disl.set_text(model[iter][9])
             hbox.pack_start(self.entry_disl, True)
             return myFrame(" Дислокация ", hbox)
         def _rod_vid_voisk():
             hbox = gtk.HBox(False, 5)
             self.entry_rod_vid_voisk = gtk.Entry()
             self.entry_rod_vid_voisk.set_max_length(50)
+            self.entry_rod_vid_voisk.set_text(model[iter][10])
             hbox.pack_start(self.entry_rod_vid_voisk, True)
             return myFrame(" Род/вид войск ", hbox)
         def _kontingent():
@@ -105,6 +116,7 @@ class Add_paned():
             self.kontingent = gtk.combo_box_entry_new_text()
             for strType in KONTINGENT:
                 self.kontingent.append_text(strType)
+            self.kontingent.set_active(KONTINGENT.index(model[iter][11]))
             hbox.pack_start(self.kontingent)
             return myFrame(" Контингент ", hbox)
         def _pensioner():
@@ -112,6 +124,7 @@ class Add_paned():
             self.pensioner = gtk.combo_box_entry_new_text()
             for strType in YES_NO:
                 self.pensioner.append_text(strType)
+            self.pensioner.set_active(YES_NO.index(model[iter][12]))
             hbox.pack_start(self.pensioner)
             return myFrame(" Пенсионер ", hbox)
         def _chlen_semi_voenosl():
@@ -122,12 +135,14 @@ class Add_paned():
             self.semi_voen = gtk.combo_box_entry_new_text()
             for strType in YES_NO:
                 self.semi_voen.append_text(strType)
+            self.semi_voen.set_active(YES_NO.index(model[iter][13]))
             hbox.pack_start(self.semi_voen)
             return myFrame(" Член семьи военнослужащего ", hbox)
         def _lgpvsrf():
             hbox = gtk.HBox(False, 5)
             self.entry_lgpvsrf = gtk.Entry()
             self.entry_lgpvsrf.set_max_length(50)
+            self.entry_lgpvsrf.set_text(model[iter][14])
             hbox.pack_start(self.entry_lgpvsrf, True)
             return myFrame(" ЛГП ", hbox)
         def _data_per_v_tyaz_stepen():
@@ -136,7 +151,7 @@ class Add_paned():
             self.entry_data_per_v_tyaz_stepen.set_max_length(50)
             button = gtk.Button("...")
             button.connect('clicked', self.calendar, self.entry_data_per_v_tyaz_stepen)
-
+            self.entry_data_per_v_tyaz_stepen.set_text(model[iter][15])
             hbox.pack_start(self.entry_data_per_v_tyaz_stepen, True)
             hbox.pack_start(button, False)
             return myFrame(" Дата перехода в тяж степень ", hbox)
@@ -144,6 +159,7 @@ class Add_paned():
             hbox = gtk.HBox(False, 5)
             self.entry_OSK = gtk.Entry()
             self.entry_OSK.set_max_length(50)
+            self.entry_OSK.set_text(model[iter][16])
             hbox.pack_start(self.entry_OSK, True)
             return myFrame(" ОСК ", hbox)
         def _tyaz_let():
@@ -151,6 +167,7 @@ class Add_paned():
             self.tyaz_let = gtk.combo_box_entry_new_text()
             for strType in TYAZ_LET:
                 self.tyaz_let.append_text(strType)
+            self.tyaz_let.set_active(TYAZ_LET.index(model[iter][17]))
             hbox.pack_start(self.tyaz_let)
             return myFrame(" Тяжелые/летальные ", hbox)
 
@@ -160,6 +177,7 @@ class Add_paned():
             self.entry_data_vybytia_is_tyaz.set_max_length(50)
             button = gtk.Button("...")
             button.connect('clicked', self.calendar, self.entry_data_vybytia_is_tyaz)
+            self.entry_data_vybytia_is_tyaz.set_text(model[iter][18])
             hbox.pack_start(self.entry_data_vybytia_is_tyaz, True)
             hbox.pack_start(button, False)
             return myFrame(" Дата выбытия из тяжелых ", hbox)
@@ -169,6 +187,7 @@ class Add_paned():
             self.entry_data_pervichnogo_post_v_tyaz.set_max_length(50)
             button = gtk.Button("...")
             button.connect('clicked', self.calendar, self.entry_data_pervichnogo_post_v_tyaz)
+            self.entry_data_pervichnogo_post_v_tyaz.set_text(model[iter][19])
             hbox.pack_start(self.entry_data_pervichnogo_post_v_tyaz, True)
             hbox.pack_start(button, False)
             return myFrame(" Дата первичного поступления в тяж степень ", hbox)
@@ -178,19 +197,20 @@ class Add_paned():
             hbox.pack_start(self.nozologii, True)
             for strType in NOZOLOGII:
                 self.nozologii.append_text(strType)
-
+            self.nozologii.set_active(NOZOLOGII.index(model[iter][20]))
             return myFrame(" Нозологии ", hbox)
         def _gorod_vch():
             hbox = gtk.HBox(False, 5)
             self.entry_gorod_vch = gtk.Entry()
             self.entry_gorod_vch.set_max_length(50)
             hbox.pack_start(self.entry_gorod_vch, True)
+            self.entry_gorod_vch.set_text(model[iter][21])
             return myFrame(" Город в\ч ", hbox)
 
         hpaned = gtk.VPaned()
         vbox = gtk.VBox()
         hbox = gtk.HBox()
-        hbox.pack_start(self._okrug())
+        hbox.pack_start(_okrug())
         hbox.pack_start(_familia())
         hbox.pack_start(_imya())
         hbox.pack_start(_othcestvo())
@@ -239,19 +259,20 @@ class Add_paned():
         myTree.grab_focus()
 
     def __action_buttons(self, window, Mapsobj, listStore, myTree):
-        def btn_add_clicked(button):
-            bd.add_patients(OKRUG[self.okrug.get_active()], self.entry_familia.get_text(), self.entry_imya.get_text(), self.entry_othcestvo.get_text(),
+        treeselection = myTree.get_selection()
+        (model, iter) = treeselection.get_selected()
+        def btn_edit_clicked(button):
+            bd.edit_patients(model[iter][0], OKRUG[self.okrug.get_active()], self.entry_familia.get_text(), self.entry_imya.get_text(), self.entry_othcestvo.get_text(),
                    ZVANIE[self.zvanie.get_active()], self.entry_dateofbirth.get_text(), self.entry_dateofdeath.get_text(), self.entry_vchast.get_text(),
                    self.entry_disl.get_text(), self.entry_rod_vid_voisk.get_text(), KONTINGENT[self.kontingent.get_active()], YES_NO[self.pensioner.get_active()],
                    YES_NO[self.semi_voen.get_active()], self.entry_lgpvsrf.get_text(), self.entry_data_per_v_tyaz_stepen.get_text(), self.entry_OSK.get_text(),
                    TYAZ_LET[self.tyaz_let.get_active()], self.entry_data_vybytia_is_tyaz.get_text(), self.entry_data_pervichnogo_post_v_tyaz.get_text(),
                             NOZOLOGII[self.nozologii.get_active()], self.entry_gorod_vch.get_text())
-            # print OKRUG[1]
 
             window.destroy()
             Mapsobj.refresh(listStore, myTree)
             # self.settingsw = Add(self, listStore, myTree)
-            # print self.entry_okrug.get_text()
+
 
 
 
@@ -276,7 +297,7 @@ class Add_paned():
         bbox.set_spacing(60)
 
         button = gtk.Button(stock=gtk.STOCK_SAVE)
-        button.connect('clicked', btn_add_clicked)
+        button.connect('clicked', btn_edit_clicked)
         bbox.add(button)
 
         button = gtk.Button(stock=gtk.STOCK_CANCEL)

@@ -2,15 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="10a48302-a244-4b87-b55a-b94517b57b0f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/redact/Add_paned.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/widg/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/redact/Edit_old.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/redact/Edit_paned.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.py" beforeDir="false" afterPath="$PROJECT_DIR$/2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MainFrame.py" beforeDir="false" afterPath="$PROJECT_DIR$/MainFrame.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bd.py" beforeDir="false" afterPath="$PROJECT_DIR$/bd.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/constants.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mydb.db" beforeDir="false" afterPath="$PROJECT_DIR$/mydb.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/redact/Add.py" beforeDir="false" afterPath="$PROJECT_DIR$/redact/Add.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/redact/Add_paned.py" beforeDir="false" afterPath="$PROJECT_DIR$/redact/Add_paned.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/redact/Edit.py" beforeDir="false" afterPath="$PROJECT_DIR$/redact/Edit.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,16 +31,17 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/redact" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\test\widg" />
-      <recent name="D:\test" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\test" />
       <recent name="D:\test\redact" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\test\redact" />
+      <recent name="D:\test\widg" />
+      <recent name="D:\test" />
     </key>
   </component>
   <component name="RunDashboard">

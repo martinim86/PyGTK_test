@@ -61,16 +61,33 @@ def add_patients(okrug, familia, imya, otchestvo,
     cursor.execute(sql, data_tuple)
     conn.commit()
 
-def edit(id, entry, password):
-    sql = """Update user1 set  login = ?, pass = ? where a = ?"""
-    data_tuple = (entry,password, id)
+# def edit(id, entry, password):
+#     sql = """Update user1 set  login = ?, pass = ? where a = ?"""
+#     data_tuple = (entry,password, id)
+#     cursor.execute(sql, data_tuple)
+#     conn.commit()
+def edit_patients(id, okrug, familia, imya, otchestvo,
+                   zvanie, dateofbirth, dateofdeath, vchast,
+                   disl, rod_vid_voisk, kontingent, pensioner,
+                   chlen_semi_voenosl, lgpvsrf, data_per_v_tyaz_stepen, OSK,
+                   tyaz_let, data_vybytia_is_tyaz, data_pervichnogo_post_v_tyaz,
+                            nozologii, gorod_vch):
+    sql = """Update patients set  okrug = ?, familia = ?, imya = ?, otchestvo = ?, zvanie = ?, dateofbirth = ?, 
+    dateofdeath = ?, vchast = ?, disl = ?, rod_vid_voisk = ?, kontingent = ?, pensioner = ?, chlen_semi_voenosl = ?, 
+    lgpvsrf = ?, data_per_v_tyaz_stepen = ?, OSK = ?, tyaz_let = ?, data_vybytia_is_tyaz = ?, data_pervichnogo_post_v_tyaz = ?, nozologii = ?, gorod_vch = ? where id = ?"""
+    data_tuple = (okrug, familia, imya, otchestvo,
+                   zvanie, dateofbirth, dateofdeath, vchast,
+                   disl, rod_vid_voisk, kontingent, pensioner,
+                   chlen_semi_voenosl, lgpvsrf, data_per_v_tyaz_stepen, OSK,
+                   tyaz_let, data_vybytia_is_tyaz, data_pervichnogo_post_v_tyaz,
+                            nozologii, gorod_vch, id)
     cursor.execute(sql, data_tuple)
     conn.commit()
+
 
 def delete(id):
     sql = """DELETE from patients where id = ?"""
     # data_tuple = (id)
     cursor.execute(sql, (id, ))
-    print id
     conn.commit()
 

@@ -61,8 +61,6 @@ class MainFrame():
         label = gtk.Label(i)
         buttons = self.__action_buttons(listStore, myTree)
         hpaned.pack2(buttons, False, False)
-
-
         return hpaned
 
     def refresh(self, listStore, myTree):
@@ -74,15 +72,9 @@ class MainFrame():
     def __action_buttons(self, listStore, myTree):
         def btn_add_clicked(button, listStore, myTree):
             self.settingsw = Add(self, listStore, myTree)
-            # treeSelection = myTree.get_selection()
-            # model, iter = treeSelection.get_selected()
-            # listStore.clear()
-            # myTree.set_model(self.liststore_tz(listStore))
-            # listStore.set_sort_column_id(0, gtk.SORT_ASCENDING)
-            # myTree.grab_focus()
 
         def btn_edit_clicked(button, listStore, myTree):
-            Edit(self.model, self.treeiter, self, listStore, myTree)
+            Edit(self, listStore, myTree)
 
         def btn_delete_clicked(button, listStore, myTree):
             treeSelection = myTree.get_selection()
