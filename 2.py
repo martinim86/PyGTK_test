@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# example treeviewdnd.py
+# -*- coding:utf-8 -*-
+# example entry.py
 
 import pygtk
 
@@ -8,118 +8,68 @@ pygtk.require('2.0')
 import gtk
 
 
-class TreeViewDnDExample:
-    TARGETS = [
-        ('MY_TREE_MODEL_ROW', gtk.TARGET_SAME_WIDGET, 0),
-        ('text/plain', 0, 1),
-        ('TEXT', 0, 2),
-        ('STRING', 0, 3),
-    ]
+class EntryExample:
+    def enter_callback(self, widget, entry):
+        # entry_text = entry.get_text()
+        # print "Entry contents: %s\n" % entry_text
+        print "Hi"
 
-    # закрываем окно и выходим
-    def delete_event(self, widget, event, data=None):
-        gtk.main_quit()
-        return False
+    def entry_toggle_editable(self, checkbutton, entry):
+        entry.set_editable(checkbutton.get_active())
 
-    def clear_selected(self, button):
-        selection = self.treeview.get_selection()
-        model, iter = selection.get_selected()
-        if iter:
-            model.remove(iter)
-        return
+    def entry_toggle_visibility(self, checkbutton, entry):
+        entry.set_visibility(checkbutton.get_active())
 
     def __init__(self):
         # Создаём новое окно
-        self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
+        window = gtk.Window(gtk.WINDOW_TOPLEVEL)
+        window.set_size_request(250, 100)
+        window.set_title("GTK Entry")
+        window.connect("delete_event", lambda w, e: gtk.main_quit())
 
-        self.window.set_title("URL Cache")
+        vbox = gtk.VBox(False, 0)
+        window.add(vbox)
+        vbox.show()
 
-        self.window.set_size_request(200, 200)
+        entry = gtk.Entry()
+        entry.set_max_length(50)
+        entry.connect("activate", self.enter_callback, entry)
+        entry.set_text("привет")
+        entry.insert_text(" мир", len(entry.get_text()))
+        entry.select_region(0, len(entry.get_text()))
+        vbox.pack_start(entry, True, True, 0)
+        entry.show()
 
-        self.window.connect("delete_event", self.delete_event)
+        hbox = gtk.HBox(False, 0)
+        vbox.add(hbox)
+        hbox.show()
 
-        self.scrolledwindow = gtk.ScrolledWindow()
-        self.vbox = gtk.VBox()
-        self.hbox = gtk.HButtonBox()
-        self.vbox.pack_start(self.scrolledwindow, True)
-        self.vbox.pack_start(self.hbox, False)
-        self.b0 = gtk.Button(None, gtk.STOCK_CLEAR)
-        self.b1 = gtk.Button(None, gtk.STOCK_CUT)
-        self.hbox.pack_start(self.b0)
-        self.hbox.pack_start(self.b1)
+        check = gtk.CheckButton("Редактируемое\nполе")
+        hbox.pack_start(check, True, True, 0)
+        check.connect("toggled", self.entry_toggle_editable, entry)
+        check.set_active(True)
+        check.show()
 
-        # создааём liststore с одним строковым столбцом
-        self.liststore = gtk.ListStore(str)
+        check = gtk.CheckButton("Видимые\nсимволы")
+        hbox.pack_start(check, True, True, 0)
+        check.connect("toggled", self.entry_toggle_visibility, entry)
+        check.set_active(True)
+        check.show()
 
-        # создаём TreeView используя liststore
-        self.treeview = gtk.TreeView(self.liststore)
-
-        # создаём CellRenderer для отображения данных
-        self.cell = gtk.CellRendererText()
-
-        # создаём TreeViewColumn для отображения данных
-        self.tvcolumn = gtk.TreeViewColumn('URL', self.cell, text=0)
-
-        # добавляем столбцы в treeview
-        self.treeview.append_column(self.tvcolumn)
-        self.b0.connect_object('clicked', gtk.ListStore.clear, self.liststore)
-        self.b1.connect('clicked', self.clear_selected)
-        # make treeview searchable
-        self.treeview.set_search_column(0)
-
-        # разрешаем сортировку
-        self.tvcolumn.set_sort_column_id(0)
-
-        # Включаем перетаскивание веток включая перемещение
-        self.treeview.enable_model_drag_source(gtk.gdk.BUTTON1_MASK,
-                                               self.TARGETS,
-                                               gtk.gdk.ACTION_DEFAULT |
-                                               gtk.gdk.ACTION_MOVE)
-        self.treeview.enable_model_drag_dest(self.TARGETS,
-                                             gtk.gdk.ACTION_DEFAULT)
-
-        self.treeview.connect("drag_data_get", self.drag_data_get_data)
-        self.treeview.connect("drag_data_received",
-                              self.drag_data_received_data)
-
-        self.scrolledwindow.add(self.treeview)
-        self.window.add(self.vbox)
-        self.window.show_all()
-
-    def drag_data_get_data(self, treeview, context, selection, target_id,
-                           etime):
-        treeselection = treeview.get_selection()
-        model, iter = treeselection.get_selected()
-        data = model.get_value(iter, 0)
-        selection.set(selection.target, 8, data)
-
-    def drag_data_received_data(self, treeview, context, x, y, selection,
-                                info, etime):
-        model = treeview.get_model()
-        data = selection.data
-        drop_info = treeview.get_dest_row_at_pos(x, y)
-        if drop_info:
-            path, position = drop_info
-            iter = model.get_iter(path)
-            if (position == gtk.TREE_VIEW_DROP_BEFORE
-                    or position == gtk.TREE_VIEW_DROP_INTO_OR_BEFORE):
-                model.insert_before(iter, [data])
-            else:
-                model.insert_after(iter, [data])
-        else:
-            model.append([data])
-        if context.action == gtk.gdk.ACTION_MOVE:
-            context.finish(True, True, etime)
-        return
+        button = gtk.Button(stock=gtk.STOCK_CLOSE)
+        button.connect("clicked", lambda w: gtk.main_quit())
+        vbox.pack_start(button, True, True, 0)
+        button.set_flags(gtk.CAN_DEFAULT)
+        button.grab_default()
+        button.show()
+        window.show()
 
 
 def main():
     gtk.main()
+    return 0
 
 
 if __name__ == "__main__":
-    treeviewdndex = TreeViewDnDExample()
-    for i in ['www.yandex.ru', 'www.google.ru', 'www.pygtk.ru', 'www.rosix.ru']:
-        treeviewdndex.liststore.append([i])
+    EntryExample()
     main()
-

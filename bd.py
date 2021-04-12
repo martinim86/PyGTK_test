@@ -24,7 +24,7 @@ def login_bd():
     sql = "SELECT login,pass FROM user1"
     return cursor.execute(sql)
 def get_tyaz_from_db():
-    sql = "SELECT a, login, pass FROM user1"
+    sql = "SELECT * FROM patients"
     return cursor.execute(sql)
 
 def add(entry, password):
@@ -36,17 +36,41 @@ def add(entry, password):
     data_tuple = (entry, password)
     cursor.execute(sql, data_tuple)
     conn.commit()
+def add_patients(okrug, familia, imya, otchestvo,
+                   zvanie, dateofbirth, dateofdeath, vchast,
+                   disl, rod_vid_voisk, kontingent, pensioner,
+                   chlen_semi_voenosl, lgpvsrf, data_per_v_tyaz_stepen, OSK,
+                   tyaz_let, data_vybytia_is_tyaz, data_pervichnogo_post_v_tyaz,
+                            nozologii, gorod_vch):
+
+    sql = """INSERT INTO patients
+                              (okrug, familia, imya, otchestvo,
+                   zvanie, dateofbirth, dateofdeath, vchast,
+                   disl, rod_vid_voisk, kontingent, pensioner,
+                   chlen_semi_voenosl, lgpvsrf, data_per_v_tyaz_stepen, OSK,
+                   tyaz_let, data_vybytia_is_tyaz, data_pervichnogo_post_v_tyaz,
+                            nozologii, gorod_vch)
+                              VALUES
+                              (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );"""
+    data_tuple = (okrug, familia, imya, otchestvo,
+                   zvanie, dateofbirth, dateofdeath, vchast,
+                   disl, rod_vid_voisk, kontingent, pensioner,
+                   chlen_semi_voenosl, lgpvsrf, data_per_v_tyaz_stepen, OSK,
+                   tyaz_let, data_vybytia_is_tyaz, data_pervichnogo_post_v_tyaz,
+                            nozologii, gorod_vch)
+    cursor.execute(sql, data_tuple)
+    conn.commit()
 
 def edit(id, entry, password):
-
     sql = """Update user1 set  login = ?, pass = ? where a = ?"""
     data_tuple = (entry,password, id)
     cursor.execute(sql, data_tuple)
     conn.commit()
+
 def delete(id):
+    sql = """DELETE from patients where id = ?"""
+    # data_tuple = (id)
+    cursor.execute(sql, (id, ))
     print id
-    sql = """DELETE from user1 where a = ?"""
-    data_tuple = (id)
-    cursor.execute(sql, data_tuple)
     conn.commit()
 
