@@ -22,7 +22,7 @@ class BasicTreeViewExample:
 
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
 
-        self.window.set_title("База дежурного ЦКМО")
+        self.window.set_title("CRUD PyGTK")
 
         self.window.set_size_request(600, 600)
 

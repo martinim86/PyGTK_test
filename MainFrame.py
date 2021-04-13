@@ -11,7 +11,7 @@ class MainFrame():
     treeiter = ""
 
     def liststore_tz(self, listStore):
-        for i in bd.get_tyaz_from_db():
+        for i in bd.get_field():
             listStore.append([i[0], i[1], i[2], i[3], i[4], i[5], i[6], i[7], i[8], i[9], i[10], i[11], i[12], i[13], i[14], i[15], i[16], i[17], i[18], i[19], i[20], i[12]])
         return listStore
 
@@ -21,14 +21,8 @@ class MainFrame():
         listStore = gtk.ListStore(int, str, str, str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str)
 
         myTree = gtk.TreeView(self.liststore_tz(listStore))
-        strCols = ['Index','Округ',  'Фамилия', 'Имя', 'Отчетство', 'Звание', 'Дата рождения' , 'Дата смерти', 'Военная часть', 'Дислокация', 'Род/вид войск', 'Контингент', 'Пенсионер ВС', 'Член семьи военнослужащего', 'ЛГП ВС РФ', 'Дата перевода в тяжелую степень', 'ОСК', 'Тяжелые/летальные', 'Дата выбырия из тяжелых', 'Дата первичного поступления в тяжелую степень', 'Нохология', 'Город в/ч']
+        strCols = ['Index','Field_1',  'Field_2', 'Field_1', 'Field_1', 'Field_1', 'Field_1' , 'Field_1', 'Field_1', 'Field_1', 'Field_1', 'Field_1', 'Field_1', 'Field_1', 'Field_1', 'Field_1', 'Field_1', 'Field_1', 'Field_1', 'Field_1', 'Field_1', 'Field_1']
         treeselection = myTree.get_selection()
-        # def on_tree_selection_changed(selection):
-        #     model, treeiter = treeselection.get_selected()
-        #     self.model = model
-        #     self.treeiter = treeiter
-
-        # treeselection.connect("changed", on_tree_selection_changed)
         (model, iter) = treeselection.get_selected()
 
 
