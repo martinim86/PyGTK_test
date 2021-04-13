@@ -21,7 +21,7 @@ class MainFrame():
         listStore = gtk.ListStore(int, str, str, str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str,str)
 
         myTree = gtk.TreeView(self.liststore_tz(listStore))
-        strCols = ['Index','Field_1',  'Field_2', 'Field_1', 'Field_1', 'Field_1', 'Field_1' , 'Field_1', 'Field_1', 'Field_1', 'Field_1', 'Field_1', 'Field_1', 'Field_1', 'Field_1', 'Field_1', 'Field_1', 'Field_1', 'Field_1', 'Field_1', 'Field_1', 'Field_1']
+        strCols = ['Index','Field_1',  'Field_2', 'Field_3', 'Field_4', 'Field_5', 'Field_6' , 'Field_7', 'Field_8', 'Field_9', 'Field_10', 'Field_11', 'Field_12', 'Field_13', 'Field_14', 'Field_15', 'Field_16', 'Field_17', 'Field_18', 'Field_19', 'Field_20', 'Field_21']
         treeselection = myTree.get_selection()
         (model, iter) = treeselection.get_selected()
 
